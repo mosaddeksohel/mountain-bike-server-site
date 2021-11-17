@@ -11,7 +11,6 @@ app.use(cors());
 app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.10dvn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-console.log(uri)
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function run() {
@@ -47,6 +46,15 @@ async function run() {
             res.json(result)
         });
 
+
+        // get all orders
+        app.get('/orders', async (req, res) => {
+            const query = req.query;
+            const cursor = orderCollection.find(query);
+            const orders = await cursor.toArray();
+            res.json(orders)
+        });
+
         // get orders based on user email.
         app.get('/orders', async (req, res) => {
             const email = req.query.email;
@@ -57,13 +65,6 @@ async function run() {
         });
 
 
-        // get all orders based on user email.
-        app.get('/orders', async (req, res) => {
-            const cursor = orderCollection.find({});
-            const orders = await cursor.toArray();
-            res.json(orders)
-        });
-
         // DELETE Order API
         app.delete('/orders/:id', async (req, res) => {
             const id = req.params.id;
@@ -72,9 +73,6 @@ async function run() {
             res.json(result)
         })
 
-
-
-
         // POST API
         app.post('/products', async (req, res) => {
             const product = req.body;
@@ -82,8 +80,6 @@ async function run() {
             console.log(result)
             res.json(result)
         });
-
-
 
         // DELETE API
         app.delete('/products/:id', async (req, res) => {
@@ -107,8 +103,6 @@ async function run() {
             res.json(ratting);
         });
 
-
-
         // GET admin
         app.get('/users/:email', async (req, res) => {
             const email = req.params.email;
@@ -119,7 +113,8 @@ async function run() {
                 isAdmin = true;
             }
             res.json({ admin: isAdmin });
-        })
+        });
+
         // POST user 
         app.post('/users', async (req, res) => {
             const user = req.body;

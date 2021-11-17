@@ -48,11 +48,11 @@ async function run() {
 
 
         // get all orders
-        app.get('/orders', async (req, res) => {
-            const cursor = orderCollection.find({});
-            const orders = await cursor.toArray();
-            res.json(orders)
-        });
+        // app.get('/orders', async (req, res) => {
+        //     const cursor = orderCollection.find({});
+        //     const orders = await cursor.toArray();
+        //     res.json(orders)
+        // });
 
         // get orders based on user email.
         app.get('/orders', async (req, res) => {
@@ -95,7 +95,7 @@ async function run() {
             res.json(result)
         });
 
-        // DELETE API
+        // DELETE product API
         app.delete('/products/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };

@@ -49,8 +49,7 @@ async function run() {
 
         // get all orders
         app.get('/orders', async (req, res) => {
-            const query = req.body;
-            const cursor = orderCollection.find(query);
+            const cursor = orderCollection.find({});
             const orders = await cursor.toArray();
             res.json(orders)
         });
@@ -64,14 +63,29 @@ async function run() {
             res.json(orders)
         });
 
-
-        // DELETE Order API
-        app.delete('/orders/:id', async (req, res) => {
+        // Status update
+        app.put('/users/:id', async (req, res) => {
             const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const result = await orderCollection.deleteOne(query);
+            const updatedUser = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    status: updatedUser.name,
+                    note: updatedUser.note
+                },
+            };
+            const result = await userCollection.updateOne(filter, updateDoc, options)
             res.json(result)
         })
+
+
+        app.delete('/users/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await userCollection.deleteOne(query)
+            res.send(result);
+        });
 
         // POST API
         app.post('/products', async (req, res) => {

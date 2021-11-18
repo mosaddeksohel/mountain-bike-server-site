@@ -42,12 +42,32 @@ async function run() {
         app.post('/orders', async (req, res) => {
             const order = req.body;
             order.status = 'pending';
-
             const result = await orderCollection.insertOne(order)
             console.log(result);
             res.json(result)
         });
 
+
+        app.put('/modified/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            console.log(req.params)
+            const options = { upsert: true }
+            const updatedDoc = {
+                $set: { status: 'approved' }
+            }
+            const result = await orderCollection.updateOne(query, updatedDoc, options);
+            res.json(result)
+        });
+
+
+
+        // GET all orders
+        app.get('/allorders', async (req, res) => {
+            const cursor = orderCollection.find({});
+            const product = await cursor.toArray();
+            res.send(product)
+        })
 
 
 

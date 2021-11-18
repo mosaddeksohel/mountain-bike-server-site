@@ -63,7 +63,7 @@ async function run() {
 
 
         // GET all orders
-        app.get('/allorders', async (req, res) => {
+        app.get('/allOrders', async (req, res) => {
             const cursor = orderCollection.find({});
             const product = await cursor.toArray();
             res.send(product)

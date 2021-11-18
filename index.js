@@ -47,12 +47,8 @@ async function run() {
         });
 
 
-        // get all orders
-        // app.get('/orders', async (req, res) => {
-        //     const cursor = orderCollection.find({});
-        //     const orders = await cursor.toArray();
-        //     res.json(orders)
-        // });
+
+
 
         // get orders based on user email.
         app.get('/orders', async (req, res) => {
@@ -62,6 +58,19 @@ async function run() {
             const orders = await cursor.toArray();
             res.json(orders)
         });
+
+
+        /// delete order
+
+        app.delete("/deleteOrder/:id", async (req, res) => {
+            console.log(req)
+
+            const result = await orderCollection.deleteOne({ _id: ObjectId(req.params.id) });
+            console.log(req.params.id)
+            res.send(result);
+        });
+
+
 
         // Status update
         app.put('/users/:id', async (req, res) => {
@@ -86,6 +95,9 @@ async function run() {
             const result = await userCollection.deleteOne(query)
             res.send(result);
         });
+
+
+
 
         // POST API
         app.post('/products', async (req, res) => {

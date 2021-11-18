@@ -41,6 +41,8 @@ async function run() {
         // Order send to server
         app.post('/orders', async (req, res) => {
             const order = req.body;
+            order.status = 'pending';
+
             const result = await orderCollection.insertOne(order)
             console.log(result);
             res.json(result)

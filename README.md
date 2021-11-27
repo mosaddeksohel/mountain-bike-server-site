@@ -8,7 +8,7 @@ The sport or activity of riding a mountain bike (a type of bicycle that has a st
 
 # `The features you will get`
 
-* Build a professional niche Mountain Bike selling website to sell the bikes and the costumes are chosen to buy easily and load data from the server.
+* niche Mountain Bike selling website to sell the bikes and the costumes are chosen to buy easily and load data from the server.
 * Implement to admin dashboard to monitor the CURD operation to UI.
 * Users can cancel their order and if any product is shipped to the customer then the admin can declare the product pending to be shipped & the admin can add any product.
 * Customers create their account only using email and password and Users can review their satisfaction with the product and services and implement this system using firebase.
